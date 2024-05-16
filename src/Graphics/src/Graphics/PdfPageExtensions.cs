@@ -9,7 +9,24 @@ namespace Microsoft.Maui.Graphics
 		public static byte[] AsBytes(this IPdfPage target)
 		{
 			if (target == null)
+
+/* Unmerged change from project 'Graphics(net8.0-windows10.0.20348)'
+Before:
 				return null;
+
+			using (var stream = new MemoryStream())
+			{
+After:
+			{
+*/
+			{
+				return null;
+			}
+
+			using (var stream = new MemoryStream())
+			{
+				return null;
+			}
 
 			using (var stream = new MemoryStream())
 			{
@@ -21,7 +38,9 @@ namespace Microsoft.Maui.Graphics
 		public static Stream AsStream(this IPdfPage target)
 		{
 			if (target == null)
+			{
 				return null;
+			}
 
 			var stream = new MemoryStream();
 			target.Save(stream);
@@ -33,7 +52,24 @@ namespace Microsoft.Maui.Graphics
 		public static async Task<byte[]> AsBytesAsync(this IPdfPage target)
 		{
 			if (target == null)
+
+/* Unmerged change from project 'Graphics(net8.0-windows10.0.20348)'
+Before:
 				return null;
+
+			using (var stream = new MemoryStream())
+			{
+After:
+			{
+*/
+			{
+				return null;
+			}
+
+			using (var stream = new MemoryStream())
+			{
+				return null;
+			}
 
 			using (var stream = new MemoryStream())
 			{
@@ -45,7 +81,9 @@ namespace Microsoft.Maui.Graphics
 		public static string AsBase64(this IPdfPage target)
 		{
 			if (target == null)
+			{
 				return null;
+			}
 
 			var bytes = target.AsBytes();
 			return Convert.ToBase64String(bytes);

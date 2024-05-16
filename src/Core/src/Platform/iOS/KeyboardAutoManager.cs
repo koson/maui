@@ -41,9 +41,28 @@ internal static class KeyboardAutoManager
 	static bool CheckIfEligible(this UIView view)
 	{
 		if (view is UITextField field && field.ReturnKeyType == UIReturnKeyType.Next)
+
+/* Unmerged change from project 'Core(net8.0-maccatalyst)'
+Before:
 			return true;
 		else if (view is UITextView)
 			return true;
+After:
+		{
+			return true;
+		}
+		else if (view is UITextView)
+		{
+			return true;
+		}
+*/
+		{
+			return true;
+		}
+		else if (view is UITextView)
+		{
+			return true;
+		}
 
 		return false;
 	}

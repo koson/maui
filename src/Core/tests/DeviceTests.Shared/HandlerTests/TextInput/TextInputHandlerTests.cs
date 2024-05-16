@@ -50,9 +50,15 @@ namespace Microsoft.Maui.DeviceTests
 			await SetValueAsync<string, THandler>(textInput, newText, SetNativeText);
 
 			if (eventExpected)
+			{
 				Assert.Equal(1, eventFiredCount);
+			}
 			else
+			{
+			{
 				Assert.Equal(0, eventFiredCount);
+			}
+			}
 		}
 
 		[Fact]

@@ -18,6 +18,9 @@ namespace Microsoft.Maui.Controls
 		{
 			var strValue = value?.ToString();
 			if (strValue == null)
+
+/* Unmerged change from project 'Controls.Core(net8.0-ios)'
+Before:
 				throw new ArgumentNullException(nameof(strValue));
 
 			ItemsLayoutOrientation? orientation = default(ItemsLayoutOrientation?);
@@ -42,6 +45,133 @@ namespace Microsoft.Maui.Controls
 			{
 				if (strValue.Length == identifierLength)
 					return new GridItemsLayout(orientation.Value);
+After:
+			{
+				throw new ArgumentNullException(nameof(strValue));
+			}
+
+			ItemsLayoutOrientation? orientation = default(ItemsLayoutOrientation?);
+			int identifierLength = 0;
+
+			if (strValue == "VerticalList")
+			{
+				return LinearItemsLayout.Vertical;
+			}
+			else if (strValue == "HorizontalList")
+			{
+				return LinearItemsLayout.Horizontal;
+			}
+			else if (strValue.StartsWith("VerticalGrid", StringComparison.Ordinal))
+			{
+				orientation = ItemsLayoutOrientation.Vertical;
+				identifierLength = "VerticalGrid".Length;
+			}
+			else if (strValue.StartsWith("HorizontalGrid", StringComparison.Ordinal))
+			{
+				orientation = ItemsLayoutOrientation.Horizontal;
+				identifierLength = "HorizontalGrid".Length;
+			}
+
+			if (orientation.HasValue)
+			{
+				if (strValue.Length == identifierLength)
+				{
+					return new GridItemsLayout(orientation.Value);
+				}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-android)'
+Before:
+				throw new ArgumentNullException(nameof(strValue));
+
+			ItemsLayoutOrientation? orientation = default(ItemsLayoutOrientation?);
+			int identifierLength = 0;
+
+			if (strValue == "VerticalList")
+				return LinearItemsLayout.Vertical;
+			else if (strValue == "HorizontalList")
+				return LinearItemsLayout.Horizontal;
+			else if (strValue.StartsWith("VerticalGrid", StringComparison.Ordinal))
+			{
+				orientation = ItemsLayoutOrientation.Vertical;
+				identifierLength = "VerticalGrid".Length;
+			}
+			else if (strValue.StartsWith("HorizontalGrid", StringComparison.Ordinal))
+			{
+				orientation = ItemsLayoutOrientation.Horizontal;
+				identifierLength = "HorizontalGrid".Length;
+			}
+
+			if (orientation.HasValue)
+			{
+				if (strValue.Length == identifierLength)
+					return new GridItemsLayout(orientation.Value);
+After:
+			{
+				throw new ArgumentNullException(nameof(strValue));
+			}
+
+			ItemsLayoutOrientation? orientation = default(ItemsLayoutOrientation?);
+			int identifierLength = 0;
+
+			if (strValue == "VerticalList")
+			{
+				return LinearItemsLayout.Vertical;
+			}
+			else if (strValue == "HorizontalList")
+			{
+				return LinearItemsLayout.Horizontal;
+			}
+			else if (strValue.StartsWith("VerticalGrid", StringComparison.Ordinal))
+			{
+				orientation = ItemsLayoutOrientation.Vertical;
+				identifierLength = "VerticalGrid".Length;
+			}
+			else if (strValue.StartsWith("HorizontalGrid", StringComparison.Ordinal))
+			{
+				orientation = ItemsLayoutOrientation.Horizontal;
+				identifierLength = "HorizontalGrid".Length;
+			}
+
+			if (orientation.HasValue)
+			{
+				if (strValue.Length == identifierLength)
+				{
+					return new GridItemsLayout(orientation.Value);
+				}
+*/
+			{
+				throw new ArgumentNullException(nameof(strValue));
+			}
+
+			ItemsLayoutOrientation? orientation = default(ItemsLayoutOrientation?);
+			int identifierLength = 0;
+
+			if (strValue == "VerticalList")
+			{
+				return LinearItemsLayout.Vertical;
+			}
+			else if (strValue == "HorizontalList")
+			{
+				return LinearItemsLayout.Horizontal;
+			}
+			else if (strValue.StartsWith("VerticalGrid", StringComparison.Ordinal))
+			{
+				orientation = ItemsLayoutOrientation.Vertical;
+				identifierLength = "VerticalGrid".Length;
+			}
+			else if (strValue.StartsWith("HorizontalGrid", StringComparison.Ordinal))
+			{
+				orientation = ItemsLayoutOrientation.Horizontal;
+				identifierLength = "HorizontalGrid".Length;
+			}
+
+			if (orientation.HasValue)
+			{
+				if (strValue.Length == identifierLength)
+				{
+					return new GridItemsLayout(orientation.Value);
+				}
 				else if (strValue.Length > identifierLength + 1 && strValue[identifierLength] == ',')
 				{
 					var argument = strValue.Substring(identifierLength + 1);
@@ -56,11 +186,20 @@ namespace Microsoft.Maui.Controls
 		public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
 		{
 			if (value is LinearItemsLayout && value == LinearItemsLayout.Vertical)
+			{
 				return "VerticalList";
+			}
+
 			if (value is LinearItemsLayout && value == LinearItemsLayout.Horizontal)
+			{
 				return "HorizontalList";
+			}
+
 			if (value is GridItemsLayout gil)
+			{
 				return $"{gil.Orientation}Grid,{gil.Span}";
+			}
+
 			throw new NotSupportedException();
 		}
 	}

@@ -66,7 +66,10 @@ namespace Samples.ViewModel
 		void DoDeleteFile()
 		{
 			if (File.Exists(localPath))
+			{
 				File.Delete(localPath);
+			}
+			}
 		}
 	}
 }

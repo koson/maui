@@ -8,6 +8,9 @@ namespace Microsoft.Maui.Graphics.Platform
 		public SizeF GetStringSize(string value, IFont font, float fontSize)
 		{
 			if (value == null)
+
+/* Unmerged change from project 'Graphics(net7.0-android)'
+Before:
 				return new SizeF();
 
 			var textPaint = new TextPaint { TextSize = fontSize };
@@ -23,6 +26,46 @@ namespace Microsoft.Maui.Graphics.Platform
 		{
 			if (aString == null)
 				return new SizeF();
+After:
+			{
+				return new SizeF();
+			}
+
+			var textPaint = new TextPaint { TextSize = fontSize };
+			textPaint.SetTypeface(font?.ToTypeface() ?? Typeface.Default);
+
+			var staticLayout = TextLayoutUtils.CreateLayout(value, textPaint, null, Layout.Alignment.AlignNormal);
+			var size = staticLayout.GetTextSizeAsSizeF(false);
+			staticLayout.Dispose();
+			return size;
+		}
+
+		public SizeF GetStringSize(string aString, IFont font, float aFontSize, HorizontalAlignment aHorizontalAlignment, VerticalAlignment aVerticalAlignment)
+		{
+			if (aString == null)
+			{
+				return new SizeF();
+			}
+*/
+			{
+				return new SizeF();
+			}
+
+			var textPaint = new TextPaint { TextSize = fontSize };
+			textPaint.SetTypeface(font?.ToTypeface() ?? Typeface.Default);
+
+			var staticLayout = TextLayoutUtils.CreateLayout(value, textPaint, null, Layout.Alignment.AlignNormal);
+			var size = staticLayout.GetTextSizeAsSizeF(false);
+			staticLayout.Dispose();
+			return size;
+		}
+
+		public SizeF GetStringSize(string aString, IFont font, float aFontSize, HorizontalAlignment aHorizontalAlignment, VerticalAlignment aVerticalAlignment)
+		{
+			if (aString == null)
+			{
+				return new SizeF();
+			}
 
 			var vTextPaint = new TextPaint { TextSize = aFontSize };
 			vTextPaint.SetTypeface(font?.ToTypeface() ?? Typeface.Default);

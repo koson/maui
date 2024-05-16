@@ -59,9 +59,14 @@ namespace Microsoft.Maui.DeviceTests
 				await WaitForUIUpdate(frame, editor);
 
 				if (option == EditorAutoSizeOption.TextChanges)
+				{
 					Assert.True(initialHeight < editor.Height);
+				}
 				else
+				{
 					Assert.Equal(initialHeight, editor.Height);
+				}
+				}
 			});
 		}
 
@@ -80,7 +85,7 @@ namespace Microsoft.Maui.DeviceTests
 					Assert.Equal(60, desiredSize.Height, 0.5d);
 				});
 		}
-		
+
 		[Fact]
 		public async Task EditorMeasureUpdatesWhenChangingWidth()
 		{
