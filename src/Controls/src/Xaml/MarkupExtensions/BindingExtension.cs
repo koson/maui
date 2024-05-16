@@ -22,12 +22,14 @@ namespace Microsoft.Maui.Controls.Xaml
 		BindingBase IMarkupExtension<BindingBase>.ProvideValue(IServiceProvider serviceProvider)
 		{
 			if (TypedBinding == null)
+			{
 				return new Binding(Path, Mode, Converter, ConverterParameter, StringFormat, Source)
 				{
 					UpdateSourceEventName = UpdateSourceEventName,
 					FallbackValue = FallbackValue,
 					TargetNullValue = TargetNullValue,
 				};
+			}
 
 			TypedBinding.Mode = Mode;
 			TypedBinding.Converter = Converter;
@@ -36,6 +38,7 @@ namespace Microsoft.Maui.Controls.Xaml
 			TypedBinding.Source = Source;
 			TypedBinding.UpdateSourceEventName = UpdateSourceEventName;
 			TypedBinding.FallbackValue = FallbackValue;
+			TypedBinding.TargetNullValue = TargetNullValue;
 			TypedBinding.TargetNullValue = TargetNullValue;
 			return TypedBinding;
 		}

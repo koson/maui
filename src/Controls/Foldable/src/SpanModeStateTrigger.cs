@@ -47,9 +47,12 @@ namespace Microsoft.Maui.Controls.Foldable
 			}
 
 			if (_info != null)
+			{
 				_info.PropertyChanged -= OnDualScreenInfoPropertyChanged;
+			}
 
 			_visualElement = visualElement;
+			_info = new DualScreenInfo(_visualElement);
 			_info = new DualScreenInfo(_visualElement);
 		}
 
@@ -63,7 +66,9 @@ namespace Microsoft.Maui.Controls.Foldable
 				UpdateState();
 
 				if (_info != null)
+				{
 					_info.PropertyChanged += OnDualScreenInfoPropertyChanged;
+				}
 			}
 		}
 
@@ -72,7 +77,10 @@ namespace Microsoft.Maui.Controls.Foldable
 			base.OnDetached();
 
 			if (_info != null)
+			{
 				_info.PropertyChanged -= OnDualScreenInfoPropertyChanged;
+			}
+			}
 		}
 
 		void OnDualScreenInfoPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -83,7 +91,10 @@ namespace Microsoft.Maui.Controls.Foldable
 		void UpdateState()
 		{
 			if (_info == null)
+			{
+			{
 				return;
+			}
 
 			var spanMode = _info.SpanMode;
 

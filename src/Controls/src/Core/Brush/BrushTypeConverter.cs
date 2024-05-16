@@ -49,7 +49,58 @@ namespace Microsoft.Maui.Controls
 					var brush = gradientBrushParser.Parse(strValue);
 
 					if (brush != null)
+					{
+					
+/* Unmerged change from project 'Controls.Core(net8.0)'
+Before:
+				}
+After:
+					}
+				}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-ios)'
+Before:
+				}
+After:
+					}
+				}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-maccatalyst)'
+Before:
+				}
+After:
+					}
+				}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-android)'
+Before:
+				}
+After:
+					}
+				}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.19041)'
+Before:
+				}
+After:
+					}
+				}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.20348)'
+Before:
+				}
+After:
+					}
+				}
+*/
+{
 						return brush;
+					}
 				}
 
 				if (strValue.StartsWith(Rgb, StringComparison.InvariantCulture) || strValue.StartsWith(Rgba, StringComparison.InvariantCulture) || strValue.StartsWith(Hsl, StringComparison.InvariantCulture) || strValue.StartsWith(Hsla))
@@ -111,9 +162,13 @@ namespace Microsoft.Maui.Controls
 						var color = (Color)_colorConverter.ConvertFromInvariantString(parts[0]);
 
 						if (TryParseOffsets(parts, out var offsets))
+						{
 							AddGradientStops(color, offsets);
+						}
 						else
+						{
 							AddGradientStop(color);
+						}
 					}
 
 					// Color by name
@@ -124,9 +179,13 @@ namespace Microsoft.Maui.Controls
 						var color = (Color)_colorConverter.ConvertFromInvariantString(parts[0]);
 
 						if (TryParseOffsets(parts, out var offsets))
+						{
 							AddGradientStops(color, offsets);
+						}
 						else
+						{
 							AddGradientStop(color);
+						}
 					}
 
 					// Color (Rgb, Rgba, Hsl, Hsla)
@@ -156,7 +215,41 @@ namespace Microsoft.Maui.Controls
 						var parts = GetNextPart().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
 						if (TryParseOffsets(parts, out var offsets))
+
+/* Unmerged change from project 'Controls.Core(net8.0)'
+Before:
 							AddGradientStops(color, offsets);
+After:
+						{
+							AddGradientStops(color, offsets);
+						}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.19041)'
+Before:
+							AddGradientStops(color, offsets);
+After:
+						{
+							AddGradientStops(color, offsets);
+						}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.20348)'
+Before:
+							AddGradientStops(color, offsets);
+After:
+						{
+							AddGradientStops(color, offsets);
+						}
+*/
+						{
+							AddGradientStops(color, offsets);
+						}
+						else
+						{
+							AddGradientStop(color);
+							_position--;
+						}
 						else
 						{
 							AddGradientStop(color);
@@ -171,7 +264,41 @@ namespace Microsoft.Maui.Controls
 						var hasAngle = TryParseAngle(direction, out var angle);
 
 						if (hasAngle)
+
+/* Unmerged change from project 'Controls.Core(net8.0)'
+Before:
 							CreateLinearGradient(angle);
+After:
+						{
+							CreateLinearGradient(angle);
+						}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.19041)'
+Before:
+							CreateLinearGradient(angle);
+After:
+						{
+							CreateLinearGradient(angle);
+						}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.20348)'
+Before:
+							CreateLinearGradient(angle);
+After:
+						{
+							CreateLinearGradient(angle);
+						}
+*/
+						{
+							CreateLinearGradient(angle);
+						}
+						else
+						{
+							CreateLinearGradient(0);
+							_position--;
+						}
 						else
 						{
 							CreateLinearGradient(0);
@@ -195,7 +322,11 @@ namespace Microsoft.Maui.Controls
 			string GetPart()
 			{
 				if (!(_position < _parts.Length))
+				{
+				{
 					return string.Empty;
+				}
+				}
 
 				return _parts[_position];
 			}
@@ -248,7 +379,9 @@ namespace Microsoft.Maui.Controls
 			void AddGradientStops(Color color, IEnumerable<float> offsets)
 			{
 				foreach (var offset in offsets)
+				{
 					AddGradientStop(color, offset);
+				}
 			}
 
 			Tuple<Point, Point> GetCoordinatesByAngle(double angle)
@@ -323,10 +456,15 @@ namespace Microsoft.Maui.Controls
 						var position = new Point(0.5, 0.5);
 
 						if (!hasPositionX && !string.IsNullOrEmpty(directionX))
+						{
 							position = GetGradientPositionByDirection(directionX);
+						}
 
 						if (!hasPositionY && !string.IsNullOrEmpty(directionY))
+						{
+						{
 							position = GetGradientPositionByDirection(directionY);
+						}
 
 						return new Point(hasPositionX ? positionX : position.X, hasPositionY ? positionY : position.Y);
 					}
@@ -400,7 +538,9 @@ namespace Microsoft.Maui.Controls
 				foreach (var part in parts)
 				{
 					if (TryParseOffset(part, out var offset))
+					{
 						offsets.Add(offset);
+					}
 				}
 
 				result = offsets.ToArray();
