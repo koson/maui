@@ -36,7 +36,10 @@ namespace Microsoft.Maui.Handlers
 		public void Remove(IMenuElement view)
 		{
 			if (view.Handler != null)
+			{
 				PlatformView.Items.Remove((MenuFlyoutItemBase)view.ToPlatform());
+			}
+			}
 		}
 
 		public void Clear()

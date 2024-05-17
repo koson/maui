@@ -41,13 +41,27 @@ namespace Microsoft.Maui.Controls.Platform
 			_container = container;
 			_mauiContext = mauiContext;
 			if (itemHeight.HasValue)
+			{
 				_itemHeight = itemHeight.Value;
+			}
 
 			if (itemWidth.HasValue)
+			{
 				_itemWidth = itemWidth.Value;
+			}
 
 			if (itemSpacing.HasValue)
+			{
 				_itemSpacing = itemSpacing.Value;
+			}
+
+			_itemTemplateContexts = new(capacity: Math.Min(64, _itemsSource.Count));
+			}
+
+			if (itemSpacing.HasValue)
+			{
+				_itemSpacing = itemSpacing.Value;
+			}
 
 			_itemTemplateContexts = new(capacity: Math.Min(64, _itemsSource.Count));
 		}

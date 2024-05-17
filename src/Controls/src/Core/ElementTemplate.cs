@@ -25,7 +25,9 @@ namespace Microsoft.Maui.Controls
 			: this()
 		{
 			if (type == null)
+			{
 				throw new ArgumentNullException("type");
+			}
 
 			_canRecycle = true;
 			_type = type;
@@ -53,19 +55,74 @@ namespace Microsoft.Maui.Controls
 			set
 			{
 				if (_parent == value)
+				{
 					return;
+				}
+
 				if (_parent != null)
-					((IElementDefinition)_parent).RemoveResourcesChangedListener(OnResourcesChanged);
+				{
+					((IElementDefinition)_parent).
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.19041)'
+Before:
+		void IElementDefinition.RemoveResourcesChangedListener(Action<object, ResourcesChangedEventArgs> onchanged)
+		{
+			if (_changeHandlers == null)
+				return;
+After:
+		void IElementDefinition.RemoveResourcesChangedListener(OnResourcesChanged);
+				}
+
 				_parent = value;
 				if (_parent != null)
+				{
 					((IElementDefinition)_parent).AddResourcesChangedListener(OnResourcesChanged);
+				}
 			}
 		}
 
 		void IElementDefinition.RemoveResourcesChangedListener(Action<object, ResourcesChangedEventArgs> onchanged)
 		{
 			if (_changeHandlers == null)
+			{
 				return;
+			}
+*/
+RemoveResourcesChangedListener(OnResourcesChanged);
+				}
+
+				_parent = value;
+				if (_parent != null)
+				{
+					((IElementDefinition)_parent).AddResourcesChangedListener(
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.19041)'
+Before:
+				throw new InvalidOperationException("Cannot call CreateContent directly on a DataTemplateSelector");
+After:
+			{
+				throw new InvalidOperationException("Cannot call CreateContent directly on a DataTemplateSelector");
+			}
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.19041)'
+Before:
+				elem.IsTemplateRoot = true;
+After:
+			{
+				elem.IsTemplateRoot = true;
+			}
+*/
+OnResourcesChanged);
+				}
+			}
+		}
+
+		void IElementDefinition.RemoveResourcesChangedListener(Action<object, ResourcesChangedEventArgs> onchanged)
+		{
+			if (_changeHandlers == null)
+			{
+				return;
+			}
+
 			_changeHandlers.Remove(onchanged);
 		}
 
@@ -81,13 +138,17 @@ namespace Microsoft.Maui.Controls
 			}
 
 			if (this is DataTemplateSelector)
+			{
 				throw new InvalidOperationException("Cannot call CreateContent directly on a DataTemplateSelector");
+			}
 
 			object item = LoadTemplate();
 			SetupContent(item);
 
 			if (item is Element elem)
+			{
 				elem.IsTemplateRoot = true;
+			}
 
 			return item;
 		}
@@ -99,9 +160,15 @@ namespace Microsoft.Maui.Controls
 		void OnResourcesChanged(object sender, ResourcesChangedEventArgs e)
 		{
 			if (_changeHandlers == null)
+			{
 				return;
+			}
+
 			foreach (Action<object, ResourcesChangedEventArgs> handler in _changeHandlers)
+			{
 				handler(this, e);
+			}
+			}
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace Microsoft.Maui.AppiumTests.Issues
 			_ = App.WaitForElement("WaitHere");
 
 			var element = App.WaitForElement("First");
-		
+
 			VerifyScreenshot();
 		}
 	}

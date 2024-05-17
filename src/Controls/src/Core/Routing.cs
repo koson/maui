@@ -70,7 +70,9 @@ namespace Microsoft.Maui.Controls
 		internal static string GenerateImplicitRoute(string source)
 		{
 			if (IsImplicit(source))
+			{
 				return source;
+			}
 
 			return String.Concat(ImplicitPrefix, source);
 		}
@@ -98,7 +100,9 @@ namespace Microsoft.Maui.Controls
 		internal static bool IsUserDefined(BindableObject source)
 		{
 			if (source == null)
+			{
 				return false;
+			}
 
 			return IsUserDefined(GetRoute(source));
 		}
@@ -106,7 +110,9 @@ namespace Microsoft.Maui.Controls
 		internal static bool IsUserDefined(string route)
 		{
 			if (route == null)
+			{
 				return false;
+			}
 
 			return !(IsDefault(route) || IsImplicit(route));
 		}
@@ -139,7 +145,9 @@ namespace Microsoft.Maui.Controls
 		{
 			var keys = s_routeKeys;
 			if (keys != null)
+			{
 				return keys;
+			}
 
 			keys = new HashSet<string>(StringComparer.Ordinal);
 			foreach (var key in s_routes.Keys)
@@ -166,10 +174,15 @@ namespace Microsoft.Maui.Controls
 			}
 
 			if (s_routes.TryGetValue(route, out var content))
+			{
 				result = content.GetOrCreate(services);
+			}
 
 			if (result != null)
+			{
+			{
 				SetRoute(result, route);
+			}
 
 			return result;
 		}
@@ -184,7 +197,9 @@ namespace Microsoft.Maui.Controls
 		{
 			var source = GetRoute(obj);
 			if (IsImplicit(source))
+			{
 				return String.Empty;
+			}
 
 			return $"{source}/";
 		}
@@ -206,10 +221,14 @@ namespace Microsoft.Maui.Controls
 		public static void RegisterRoute(string route, RouteFactory factory)
 		{
 			if (!String.IsNullOrWhiteSpace(route))
+			{
 				route = FormatRoute(route);
+			}
+
 			ValidateRoute(route, factory);
 
 			s_routes[route] = factory;
+			s_routeKeys = null;
 			s_routeKeys = null;
 		}
 
@@ -239,7 +258,9 @@ namespace Microsoft.Maui.Controls
 		static void ValidateRoute(string route, RouteFactory routeFactory)
 		{
 			if (string.IsNullOrWhiteSpace(route))
+			{
 				throw new ArgumentNullException(nameof(route), "Route cannot be an empty string");
+			}
 
 			routeFactory = routeFactory ?? throw new ArgumentNullException(nameof(routeFactory), "Route Factory cannot be null");
 
@@ -249,12 +270,36 @@ namespace Microsoft.Maui.Controls
 			foreach (var part in parts)
 			{
 				if (IsImplicit(part))
+				{
 					throw new ArgumentException($"Route contains invalid characters in \"{part}\"");
+				}
 			}
 
 			RouteFactory existingRegistration = null;
 			if (s_routes.TryGetValue(route, out existingRegistration) && !existingRegistration.Equals(routeFactory))
+			{
 				throw new ArgumentException($"Duplicated Route: \"{route}\"");
+			}
+			}
+
+			routeFactory = routeFactory ?? throw new ArgumentNullException(nameof(routeFactory), "Route Factory cannot be null");
+
+			var uri = new Uri(route, UriKind.RelativeOrAbsolute);
+
+			var parts = uri.OriginalString.Split(new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (var part in parts)
+			{
+				if (IsImplicit(part))
+				{
+					throw new ArgumentException($"Route contains invalid characters in \"{part}\"");
+				}
+			}
+
+			RouteFactory existingRegistration = null;
+			if (s_routes.TryGetValue(route, out existingRegistration) && !existingRegistration.Equals(routeFactory))
+			{
+				throw new ArgumentException($"Duplicated Route: \"{route}\"");
+			}
 		}
 
 		class TypeRouteFactory : RouteFactory
@@ -286,7 +331,9 @@ namespace Microsoft.Maui.Controls
 			public override bool Equals(object obj)
 			{
 				if ((obj is TypeRouteFactory typeRouteFactory))
+				{
 					return typeRouteFactory._type == _type;
+				}
 
 				return false;
 			}

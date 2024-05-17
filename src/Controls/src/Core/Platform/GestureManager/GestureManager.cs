@@ -74,10 +74,15 @@ namespace Microsoft.Maui.Controls.Platform
 
 			// The connected Gesture Manager is already setup and watching the correct view
 			if (GesturePlatformManager != null)
+			{
 				return;
+			}
 
 			GesturePlatformManager = new GesturePlatformManager(handler);
 			_handler = handler;
+			_containerView = handler.ContainerView;
+			_platformView = handler.PlatformView;
+			_didHaveWindow = _view.Window != null;
 			_containerView = handler.ContainerView;
 			_platformView = handler.PlatformView;
 			_didHaveWindow = _view.Window != null;

@@ -15,9 +15,14 @@ namespace Microsoft.Maui.Platform
 		internal static void UpdateProperty(this WSwipeItem platformControl, DependencyProperty property, object? value)
 		{
 			if (value == null)
+			{
 				platformControl.ClearValue(property);
+			}
 			else
+			{
 				platformControl.SetValue(property, value);
+			}
+			}
 		}
 
 		public static WSwipeMode ToPlatform(this SwipeMode swipeMode)
@@ -38,7 +43,10 @@ namespace Microsoft.Maui.Platform
 			var textColor = view.TextColor ?? view.GetTextColor();
 
 			if (textColor != null)
+			{
 				platformControl.Foreground = textColor.ToPlatform();
+			}
+			}
 		}
 
 		public static WSwipeBehaviorOnInvoked ToPlatform(this SwipeBehaviorOnInvoked swipeBehaviorOnInvoked)

@@ -42,10 +42,52 @@ namespace Microsoft.Maui.Devices
 		DeviceIdiom(string deviceIdiom)
 		{
 			if (deviceIdiom == null)
+
+/* Unmerged change from project 'Essentials(net8.0-ios)'
+Before:
 				throw new ArgumentNullException(nameof(deviceIdiom));
 
 			if (deviceIdiom.Length == 0)
+After:
+			{
+*/
+
+/* Unmerged change from project 'Essentials(net8.0-windows10.0.19041)'
+Before:
+				throw new ArgumentNullException(nameof(deviceIdiom));
+
+			if (deviceIdiom.Length == 0)
+After:
+			{
+*/
+			{
+				throw new ArgumentNullException(nameof(deviceIdiom));
+			}
+
+			if (deviceIdiom.Length == 0)
+			{
+				throw new ArgumentNullException(nameof(deviceIdiom));
+
+/* Unmerged change from project 'Essentials(net8.0-ios)'
+Added:
+			}
+
+			if (deviceIdiom.Length == 0)
+			{
 				throw new ArgumentException(nameof(deviceIdiom));
+			}
+*/
+
+/* Unmerged change from project 'Essentials(net8.0-windows10.0.19041)'
+Added:
+			}
+
+			if (deviceIdiom.Length == 0)
+			{
+				throw new ArgumentException(nameof(deviceIdiom));
+			}
+*/
+			}
 
 			this.deviceIdiom = deviceIdiom;
 		}

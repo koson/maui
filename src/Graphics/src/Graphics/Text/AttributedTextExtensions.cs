@@ -11,12 +11,20 @@ namespace Microsoft.Maui.Graphics.Text
 		public static IAttributedText Optimize(this IAttributedText attributedText)
 		{
 			if (attributedText?.Text == null)
+			{
 				return null;
+			}
 
 			if (attributedText is AbstractAttributedText abstractAttributedText && abstractAttributedText.Optimal)
+			{
 				return attributedText;
+			}
 
 			var start = 0;
+			var attributeIndex = 0;
+			var text = attributedText.Text;
+			var length = text.Length;
+			var runs = new List<IAttributedTextRun>();
 			var attributeIndex = 0;
 			var text = attributedText.Text;
 			var length = text.Length;
@@ -28,15 +36,21 @@ namespace Microsoft.Maui.Graphics.Text
 		internal static List<IAttributedTextRun> OptimizeRuns(this IAttributedText attributedText)
 		{
 			if (attributedText?.Text == null)
+			{
 				return null;
+			}
 
 			if (attributedText is AbstractAttributedText abstractAttributedText && abstractAttributedText.Optimal)
 			{
 				if (attributedText.Runs == null)
+				{
 					return null;
+				}
 
 				if (attributedText.Runs is List<IAttributedTextRun> list)
+				{
 					return list;
+				}
 
 				return attributedText.Runs.ToList();
 			}
@@ -53,7 +67,9 @@ namespace Microsoft.Maui.Graphics.Text
 		public static IReadOnlyList<IAttributedText> CreateParagraphs(this IAttributedText attributedText)
 		{
 			if (attributedText?.Text == null)
+			{
 				return null;
+			}
 
 			List<IAttributedText> paragraphs = new List<IAttributedText>();
 
@@ -89,11 +105,15 @@ namespace Microsoft.Maui.Graphics.Text
 		{
 			// If the text doesn't have any runs, then we can simply return
 			if (text.Runs == null || text.Runs.Count == 0)
+			{
 				return 0;
+			}
 
 			// If we've already reached the end of the runs, we can simply return
 			if (!(startIndexForSearch < text.Runs.Count))
+			{
 				return startIndexForSearch;
+			}
 
 			var end = start + length;
 			var index = startIndexForSearch;
@@ -104,7 +124,9 @@ namespace Microsoft.Maui.Graphics.Text
 
 				// If the run is after the end index, then we can go ahead and return
 				if (end < run.Start)
+				{
 					return index;
+				}
 
 				if (run.Intersects(start, length))
 				{
@@ -117,12 +139,16 @@ namespace Microsoft.Maui.Graphics.Text
 						// If the length of the run is the same as the paragraph, then we know
 						// that the next run (if any) will apply to to the next paragraph.
 						if (run.Length == length)
+						{
 							return index + 1;
+						}
 
 						// If the run is longer than the line, then we know that the attributes from this run
 						// will also apply to the next paragraph.
 						if (run.Length > length)
+						{
 							return index;
+						}
 
 						// If the run length is less than the length of the line, then the next run may apply
 						// to this line, so continue
@@ -154,7 +180,51 @@ namespace Microsoft.Maui.Graphics.Text
 		public static IList<AttributedTextBlock> CreateBlocks(this IAttributedText text)
 		{
 			if (text?.Text == null)
+			{
 				return null;
+
+/* Unmerged change from project 'Graphics(net8.0-ios)'
+Before:
+			var blocks = new List<AttributedTextBlock>();
+After:
+			}
+*/
+
+/* Unmerged change from project 'Graphics(net8.0-windows10.0.19041)'
+Before:
+			var blocks = new List<AttributedTextBlock>();
+After:
+			}
+*/
+
+/* Unmerged change from project 'Graphics(net8.0-windows10.0.20348)'
+Before:
+			var blocks = new List<AttributedTextBlock>();
+After:
+			}
+*/
+
+/* Unmerged change from project 'Graphics(net8.0-ios)'
+Before:
+			var start = 0;
+After:
+			var blocks = 0;
+*/
+
+/* Unmerged change from project 'Graphics(net8.0-windows10.0.19041)'
+Before:
+			var start = 0;
+After:
+			var blocks = 0;
+*/
+
+/* Unmerged change from project 'Graphics(net8.0-windows10.0.20348)'
+Before:
+			var start = 0;
+After:
+			var blocks = 0;
+*/
+			}
 
 			var blocks = new List<AttributedTextBlock>();
 
@@ -182,7 +252,9 @@ namespace Microsoft.Maui.Graphics.Text
 					}
 #if DEBUG
 					else
+					{
 						System.Diagnostics.Debug.WriteLine("Length should not be less then 0");
+					}
 #endif
 				}
 			}

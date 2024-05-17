@@ -22,7 +22,10 @@ namespace Microsoft.Maui.Controls
 			set
 			{
 				if (_layoutAreaOverride == value)
+				{
 					return;
+				}
+
 				_layoutAreaOverride = value;
 				// Dont invalidate here, we can relayout immediately since this only impacts our innards
 				UpdateChildrenLayout();
@@ -58,8 +61,99 @@ namespace Microsoft.Maui.Controls
 				var scrollBounds = new Rect(ScrollX, ScrollY, Width, Height);
 				var itemBounds = new Rect(x, y, item.Width, item.Height);
 				if (scrollBounds.Contains(itemBounds))
+
+/* Unmerged change from project 'Controls.Core(net8.0)'
+Before:
 					return new Point(ScrollX, ScrollY);
 				switch (Orientation)
+				{
+					case ScrollOrientation.Vertical:
+						position = y > ScrollY ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+					case ScrollOrientation.Horizontal:
+						position = x > ScrollX ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+					case ScrollOrientation.Both:
+						position = x > ScrollX || y > ScrollY ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+				}
+			}
+			switch (position)
+After:
+				{
+					return new Point(ScrollX, ScrollY);
+				}
+
+				switch (position)
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-maccatalyst)'
+Before:
+					return new Point(ScrollX, ScrollY);
+				switch (Orientation)
+				{
+					case ScrollOrientation.Vertical:
+						position = y > ScrollY ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+					case ScrollOrientation.Horizontal:
+						position = x > ScrollX ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+					case ScrollOrientation.Both:
+						position = x > ScrollX || y > ScrollY ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+				}
+			}
+			switch (position)
+After:
+				{
+					return new Point(ScrollX, ScrollY);
+				}
+
+				switch (position)
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-android)'
+Before:
+					return new Point(ScrollX, ScrollY);
+				switch (Orientation)
+				{
+					case ScrollOrientation.Vertical:
+						position = y > ScrollY ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+					case ScrollOrientation.Horizontal:
+						position = x > ScrollX ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+					case ScrollOrientation.Both:
+						position = x > ScrollX || y > ScrollY ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+				}
+			}
+			switch (position)
+After:
+				{
+					return new Point(ScrollX, ScrollY);
+				}
+
+				switch (position)
+*/
+				{
+					return new Point(ScrollX, ScrollY);
+				}
+
+				switch (Orientation)
+				{
+					case ScrollOrientation.Vertical:
+						position = y > ScrollY ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+					case ScrollOrientation.Horizontal:
+						position = x > ScrollX ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+					case ScrollOrientation.Both:
+						position = x > ScrollX || y > ScrollY ? ScrollToPosition.End : ScrollToPosition.Start;
+						break;
+				}
+			}
+			switch (Orientation)
 				{
 					case ScrollOrientation.Vertical:
 						position = y > ScrollY ? ScrollToPosition.End : ScrollToPosition.Start;
@@ -98,7 +192,9 @@ namespace Microsoft.Maui.Controls
 		public void SetScrolledPosition(double x, double y)
 		{
 			if (ScrollX == x && ScrollY == y)
+			{
 				return;
+			}
 
 			ScrollX = x;
 			ScrollY = y;
@@ -145,7 +241,9 @@ namespace Microsoft.Maui.Controls
 			set
 			{
 				if (_content == value)
+				{
 					return;
+				}
 
 				OnPropertyChanging();
 				if (_content != null)
@@ -163,6 +261,32 @@ namespace Microsoft.Maui.Controls
 				OnPropertyChanged();
 				Handler?.UpdateValue(nameof(Content));
 			}
+				if (_content != null)
+				{
+					InternalChildren.Add(_content);
+					_content.SizeChanged += ContentSizeChanged;
+				}
+
+				OnPropertyChanged();
+				Handler?.UpdateValue(nameof(Content));
+			}
+		}
+
+		void ContentSizeChanged(object sender, EventArgs e)
+		{
+			var view = (sender as IView);
+			if (view == null)
+			{
+				ContentSize = Size.Zero;
+				return;
+			}
+
+			var margin = view.Margin;
+			var frameSize = view.Frame.Size;
+
+			// The ContentSize includes the margins for the content
+			ContentSize = new Size(frameSize.Width + margin.HorizontalThickness,
+				frameSize.Height + margin.VerticalThickness);
 		}
 
 		void ContentSizeChanged(object sender, EventArgs e)
@@ -242,7 +366,9 @@ namespace Microsoft.Maui.Controls
 		public Task ScrollToAsync(double x, double y, bool animated)
 		{
 			if (Orientation == ScrollOrientation.Neither)
+			{
 				return Task.FromResult(false);
+			}
 
 			var args = new ScrollToRequestedEventArgs(x, y, animated);
 			OnScrollToRequested(args);
@@ -253,16 +379,24 @@ namespace Microsoft.Maui.Controls
 		public Task ScrollToAsync(Element element, ScrollToPosition position, bool animated)
 		{
 			if (Orientation == ScrollOrientation.Neither)
+			{
 				return Task.FromResult(false);
+			}
 
 			if (!Enum.IsDefined(typeof(ScrollToPosition), position))
+			{
 				throw new ArgumentException("position is not a valid ScrollToPosition", "position");
+			}
 
 			if (element == null)
+			{
 				throw new ArgumentNullException("element");
+			}
 
 			if (!CheckElementBelongsToScrollViewer(element))
+			{
 				throw new ArgumentException("element does not belong to this ScrollView", "element");
+			}
 
 			var args = new ScrollToRequestedEventArgs(element, position, animated);
 			OnScrollToRequested(args);
@@ -278,7 +412,9 @@ namespace Microsoft.Maui.Controls
 		protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
 		{
 			if (Content == null)
+			{
 				return new SizeRequest();
+			}
 
 			switch (Orientation)
 			{
@@ -355,7 +491,10 @@ namespace Microsoft.Maui.Controls
 		double GetCoordinate(Element item, string coordinateName, double coordinate)
 		{
 			if (item == this)
+			{
 				return coordinate;
+			}
+
 			coordinate += (double)typeof(VisualElement).GetProperty(coordinateName).GetValue(item, null);
 			var visualParentElement = item.RealParent as VisualElement;
 			return visualParentElement != null ? GetCoordinate(visualParentElement, coordinateName, coordinate) : coordinate;
@@ -387,9 +526,14 @@ namespace Microsoft.Maui.Controls
 			ScrollToRequested?.Invoke(this, e);
 
 			if (Handler is null)
+			{
 				_pendingScrollToRequested = e;
+			}
 			else
+			{
 				Handler.Invoke(nameof(IScrollView.RequestScrollTo), ConvertRequestMode(e).ToRequest());
+			}
+			}
 		}
 
 		ScrollToRequestedEventArgs ConvertRequestMode(ScrollToRequestedEventArgs args)

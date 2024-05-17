@@ -167,7 +167,10 @@ namespace Microsoft.Maui.Controls
 			_animationManagerKey = _animationManager.Insert(Step);
 
 			if (!_animationManager.Ticker.IsRunning)
+			{
 				_animationManager.Ticker.Start();
+			}
+			}
 		}
 
 		void FinishImmediately()

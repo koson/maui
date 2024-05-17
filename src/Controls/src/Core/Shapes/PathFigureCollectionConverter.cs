@@ -322,7 +322,10 @@ namespace Microsoft.Maui.Controls.Shapes
 			void EnsureFigure()
 			{
 				if (!figureStarted)
+				{
+				{
 					figureStarted = true;
+				}
 			}
 
 			Point Reflect()

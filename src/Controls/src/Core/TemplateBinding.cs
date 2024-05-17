@@ -24,9 +24,36 @@ namespace Microsoft.Maui.Controls
 		public TemplateBinding(string path, BindingMode mode = BindingMode.Default, IValueConverter converter = null, object converterParameter = null, string stringFormat = null)
 		{
 			if (path == null)
+			{
 				throw new ArgumentNullException("path");
+			}
+
 			if (string.IsNullOrWhiteSpace(path))
+
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.19041)'
+Before:
+		{
+			var clone = new TemplateBinding(Path, Mode) { Converter = Converter, ConverterParameter = ConverterParameter, StringFormat = StringFormat };
+
+			if (DebuggerHelper.DebuggerIsAttached && VisualDiagnostics.GetSourceInfo(this) is SourceInfo info)
+				VisualDiagnostics.RegisterSourceInfo(clone, info.SourceUri, info.LineNumber, info.LinePosition);
+
+			return clone;
+After:
+			{
 				throw new ArgumentException("path cannot be an empty string", "path");
+			}
+
+			AllowChaining = true;
+			Path = path;
+			Converter = converter;
+			ConverterParameter = converterParameter;
+			Mode = mode;
+			StringFormat = stringFormat;
+*/
+			{
+				throw new ArgumentException("path cannot be an empty string", "path");
+			}
 
 			AllowChaining = true;
 			Path = path;
@@ -78,7 +105,9 @@ namespace Microsoft.Maui.Controls
 			base.Apply(fromTarget);
 
 			if (_expression == null)
+			{
 				_expression = new BindingExpression(this, SelfPath);
+			}
 
 			_expression.Apply(fromTarget);
 		}
@@ -87,7 +116,9 @@ namespace Microsoft.Maui.Controls
 		{
 			var view = bindObj as Element;
 			if (view == null)
+			{
 				throw new InvalidOperationException();
+			}
 
 			base.Apply(newContext, bindObj, targetProperty, fromBindingContextChanged, specificity);
 
@@ -100,7 +131,84 @@ namespace Microsoft.Maui.Controls
 			var clone = new TemplateBinding(Path, Mode) { Converter = Converter, ConverterParameter = ConverterParameter, StringFormat = StringFormat };
 
 			if (DebuggerHelper.DebuggerIsAttached && VisualDiagnostics.GetSourceInfo(this) is SourceInfo info)
+			{
 				VisualDiagnostics.RegisterSourceInfo(clone, info.SourceUri, info.LineNumber, info.LinePosition);
+			}
+
+			return clone;
+		}
+
+		/// <include file="../../docs/Microsoft.Maui.Controls/TemplateBinding.xml" path="//Member[@MemberName='Converter']/Docs/*" />
+		public IValueConverter Converter
+		{
+			get { return _converter; }
+			set
+			{
+				ThrowIfApplied();
+
+				_converter = value;
+			}
+		}
+
+		/// <include file="../../docs/Microsoft.Maui.Controls/TemplateBinding.xml" path="//Member[@MemberName='ConverterParameter']/Docs/*" />
+		public object ConverterParameter
+		{
+			get { return _converterParameter; }
+			set
+			{
+				ThrowIfApplied();
+
+				_converterParameter = value;
+			}
+		}
+
+		/// <include file="../../docs/Microsoft.Maui.Controls/TemplateBinding.xml" path="//Member[@MemberName='Path']/Docs/*" />
+		public string Path
+		{
+			get { return _path; }
+			set
+			{
+				ThrowIfApplied();
+
+				_path = value;
+				_expression = GetBindingExpression(value);
+			}
+		}
+
+		internal override void Apply(bool fromTarget)
+		{
+			base.Apply(fromTarget);
+
+			if (_expression == null)
+			{
+				_expression = new BindingExpression(this, SelfPath);
+			}
+
+			_expression.Apply(fromTarget);
+		}
+
+		internal override async void Apply(object newContext, BindableObject bindObj, BindableProperty targetProperty, bool fromBindingContextChanged, SetterSpecificity specificity)
+		{
+			var view = bindObj as Element;
+			if (view == null)
+			{
+				throw new InvalidOperationException();
+			}
+
+			base.Apply(newContext, bindObj, targetProperty, fromBindingContextChanged, specificity);
+
+			Element templatedParent = await TemplateUtilities.FindTemplatedParentAsync(view);
+			ApplyInner(templatedParent, bindObj, targetProperty);
+		}
+
+		internal override BindingBase Clone()
+		{
+			var clone = new TemplateBinding(Path, Mode) { Converter = Converter, ConverterParameter = ConverterParameter, StringFormat = StringFormat };
+
+			if (DebuggerHelper.DebuggerIsAttached && VisualDiagnostics.GetSourceInfo(this) is SourceInfo info)
+			{
+				VisualDiagnostics.RegisterSourceInfo(clone, info.SourceUri, info.LineNumber, info.LinePosition);
+			}
 
 			return clone;
 		}
@@ -108,7 +216,10 @@ namespace Microsoft.Maui.Controls
 		internal override object GetSourceValue(object value, Type targetPropertyType)
 		{
 			if (Converter != null)
+			{
+			{
 				value = Converter.Convert(value, targetPropertyType, ConverterParameter, CultureInfo.CurrentUICulture);
+			}
 
 			return base.GetSourceValue(value, targetPropertyType);
 		}
@@ -116,7 +227,10 @@ namespace Microsoft.Maui.Controls
 		internal override object GetTargetValue(object value, Type sourcePropertyType)
 		{
 			if (Converter != null)
+			{
+			{
 				value = Converter.ConvertBack(value, sourcePropertyType, ConverterParameter, CultureInfo.CurrentUICulture);
+			}
 
 			return base.GetTargetValue(value, sourcePropertyType);
 		}
@@ -126,13 +240,18 @@ namespace Microsoft.Maui.Controls
 			base.Unapply(fromBindingContextChanged: fromBindingContextChanged);
 
 			if (_expression != null)
+			{
 				_expression.Unapply();
+			}
+			}
 		}
 
 		void ApplyInner(Element templatedParent, BindableObject bindableObject, BindableProperty targetProperty)
 		{
 			if (_expression == null && templatedParent != null)
+			{
 				_expression = new BindingExpression(this, SelfPath);
+			}
 
 			_expression?.Apply(templatedParent, bindableObject, targetProperty, SetterSpecificity.FromBinding);
 		}

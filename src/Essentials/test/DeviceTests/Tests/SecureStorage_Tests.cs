@@ -146,7 +146,18 @@ namespace Microsoft.Maui.Essentials.DeviceTests
 
 			// Set a couple keys
 			foreach (var key in keys)
+
+/* Unmerged change from project 'Essentials.DeviceTests(net8.0-windows10.0.19041)'
+Before:
 				await SecureStorage.SetAsync(key, "Irrelevant Data");
+After:
+			{
+				await SecureStorage.SetAsync(key, "Irrelevant Data");
+			}
+*/
+			{
+				await SecureStorage.SetAsync(key, "Irrelevant Data");
+			}
 
 			// Remove them all
 			SecureStorage.RemoveAll();

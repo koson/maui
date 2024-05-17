@@ -55,9 +55,14 @@ namespace Microsoft.Maui.Controls
 		{
 			var currentOrientation = DeviceDisplay.MainDisplayInfo.Orientation;
 			if (Orientation.IsLandscape())
+			{
 				SetActive(currentOrientation.IsLandscape());
+			}
 			else
+			{
 				SetActive(currentOrientation.IsPortrait());
+			}
+			}
 		}
 	}
 }

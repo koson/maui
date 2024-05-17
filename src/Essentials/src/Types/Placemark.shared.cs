@@ -22,12 +22,18 @@ namespace Microsoft.Maui.Devices.Sensors
 		public Placemark(Placemark placemark)
 		{
 			if (placemark == null)
+			{
 				throw new ArgumentNullException(nameof(placemark));
+			}
 
 			if (placemark.Location == null)
+			{
 				Location = new Location();
+			}
 			else
+			{
 				Location = new Location(placemark.Location);
+			}
 
 			CountryCode = placemark.CountryCode;
 			CountryName = placemark.CountryName;
@@ -37,6 +43,8 @@ namespace Microsoft.Maui.Devices.Sensors
 			SubLocality = placemark.SubLocality;
 			Thoroughfare = placemark.Thoroughfare;
 			SubThoroughfare = placemark.SubThoroughfare;
+			SubAdminArea = placemark.SubAdminArea;
+			AdminArea = placemark.AdminArea;
 			SubAdminArea = placemark.SubAdminArea;
 			AdminArea = placemark.AdminArea;
 		}

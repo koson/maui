@@ -34,9 +34,15 @@ namespace Microsoft.Maui.Controls
 			private set
 			{
 				if (_cancellationTokenSource == value)
+				{
 					return;
+				}
+
 				if (_cancellationTokenSource != null)
+				{
 					_cancellationTokenSource.Cancel();
+				}
+
 				_cancellationTokenSource = value;
 			}
 		}
@@ -50,7 +56,9 @@ namespace Microsoft.Maui.Controls
 		public virtual Task<bool> Cancel()
 		{
 			if (!IsLoading)
+			{
 				return Task.FromResult(false);
+			}
 
 			var tcs = new TaskCompletionSource<bool>();
 			TaskCompletionSource<bool> original = Interlocked.CompareExchange(ref _completionSource, tcs, null);
@@ -59,7 +67,9 @@ namespace Microsoft.Maui.Controls
 				_cancellationTokenSource.Cancel();
 			}
 			else
+			{
 				tcs = original;
+			}
 
 			return tcs.Task;
 		}
@@ -67,6 +77,13 @@ namespace Microsoft.Maui.Controls
 		/// <include file="../../docs/Microsoft.Maui.Controls/ImageSource.xml" path="//Member[@MemberName='FromFile']/Docs/*" />
 		public static ImageSource FromFile(string file)
 		{
+
+/* Unmerged change from project 'Controls.Core(net8.0-windows10.0.19041)'
+Before:
+			_weakEventManager.HandleEvent(this, EventArgs.Empty, nameof(SourceChanged));
+After:
+			return new FileImageSource { File = file };
+*/
 			return new FileImageSource { File = file };
 		}
 
@@ -100,7 +117,10 @@ namespace Microsoft.Maui.Controls
 		public static ImageSource FromUri(Uri uri)
 		{
 			if (!uri.IsAbsoluteUri)
+			{
 				throw new ArgumentException("uri is relative");
+			}
+
 			return new UriImageSource { Uri = uri };
 		}
 
@@ -113,21 +133,120 @@ namespace Microsoft.Maui.Controls
 		public static implicit operator ImageSource(Uri uri)
 		{
 			if (uri == null)
+			{
 				return null;
+			}
 
 			if (!uri.IsAbsoluteUri)
+			{
 				throw new ArgumentException("uri is relative");
+			}
+
 			return FromUri(uri);
 		}
 
 		private protected void OnLoadingCompleted(bool cancelled)
 		{
 			if (!IsLoading || _completionSource == null)
+			{
 				return;
+			}
 
 			TaskCompletionSource<bool> tcs = Interlocked.Exchange(ref _completionSource, null);
 			if (tcs != null)
+			{
 				tcs.SetResult(cancelled);
+			}
+
+			lock (_synchandle)
+			{
+				CancellationTokenSource = null;
+			}
+		}
+
+		private protected void OnLoadingStarted()
+		{
+			lock (_synchandle)
+			{
+				CancellationTokenSource = new CancellationTokenSource();
+			}
+		}
+
+		protected void OnSourceChanged()
+		{
+			_weakEventManager.HandleEvent(this, EventArgs.Empty, nameof(SourceChanged));
+		}
+
+		/// <include file="../../docs/Microsoft.Maui.Controls/ImageSource.xml" path="//Member[@MemberName='FromResource'][2]/Docs/*" />
+		public static ImageSource FromResource(string resource, Type resolvingType)
+		{
+			return FromResource(resource, resolvingType.Assembly);
+		}
+
+		/// <include file="../../docs/Microsoft.Maui.Controls/ImageSource.xml" path="//Member[@MemberName='FromResource'][1]/Docs/*" />
+		public static ImageSource FromResource(string resource, Assembly sourceAssembly = null)
+		{
+			sourceAssembly = sourceAssembly ?? Assembly.GetCallingAssembly();
+
+			return FromStream(() => sourceAssembly.GetManifestResourceStream(resource));
+		}
+
+		/// <include file="../../docs/Microsoft.Maui.Controls/ImageSource.xml" path="//Member[@MemberName='FromStream'][1]/Docs/*" />
+		public static ImageSource FromStream(Func<Stream> stream)
+		{
+			return new StreamImageSource { Stream = token => Task.Run(stream, token) };
+		}
+
+		/// <include file="../../docs/Microsoft.Maui.Controls/ImageSource.xml" path="//Member[@MemberName='FromStream'][2]/Docs/*" />
+		public static ImageSource FromStream(Func<CancellationToken, Task<Stream>> stream)
+		{
+			return new StreamImageSource { Stream = stream };
+		}
+
+		/// <include file="../../docs/Microsoft.Maui.Controls/ImageSource.xml" path="//Member[@MemberName='FromUri']/Docs/*" />
+		public static ImageSource FromUri(Uri uri)
+		{
+			if (!uri.IsAbsoluteUri)
+			{
+				throw new ArgumentException("uri is relative");
+			}
+
+			return new UriImageSource { Uri = uri };
+		}
+
+		public static implicit operator ImageSource(string source)
+		{
+			Uri uri;
+			return Uri.TryCreate(source, UriKind.Absolute, out uri) && uri.Scheme != "file" ? FromUri(uri) : FromFile(source);
+		}
+
+		public static implicit operator ImageSource(Uri uri)
+		{
+			if (uri == null)
+			{
+				return null;
+			}
+
+			if (!uri.IsAbsoluteUri)
+			{
+				throw new ArgumentException("uri is relative");
+			}
+
+			return FromUri(uri);
+		}
+
+		private protected void OnLoadingCompleted(bool cancelled)
+		{
+			if (!IsLoading || _completionSource == null)
+			{
+				return;
+			}
+
+			TaskCompletionSource<bool> tcs = Interlocked.Exchange(ref _completionSource, null);
+			if (tcs != null)
+			{
+				tcs.SetResult(cancelled);
+			}
 
 			lock (_synchandle)
 			{

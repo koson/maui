@@ -40,18 +40,26 @@ namespace Microsoft.Maui.Handlers
 			UpdatingItemSource = updatingItemSource;
 
 			if (!updatingItemSource)
+			{
 				UpdateValue(nameof(IPicker.SelectedIndex));
+			}
+			}
 		}
 
 		static void Reload(IPickerHandler handler)
 		{
 			if (handler is PickerHandler ph1)
+			{
 				ph1.SetUpdatingItemSource(true);
+			}
 
 			handler.PlatformView.ItemsSource = new ItemDelegateList<string>(handler.VirtualView);
 
 			if (handler is PickerHandler ph2)
+			{
 				ph2.SetUpdatingItemSource(false);
+			}
+			}
 		}
 
 		// TODO: Uncomment me on NET8 [Obsolete]
@@ -110,10 +118,17 @@ namespace Microsoft.Maui.Handlers
 		void OnControlSelectionChanged(object? sender, WSelectionChangedEventArgs e)
 		{
 			if (PlatformView == null)
+			{
 				return;
+			}
 
 			if (VirtualView != null && !UpdatingItemSource)
+			{
 				VirtualView.SelectedIndex = PlatformView.SelectedIndex;
+			}
+
+			PlatformView.MinWidth = 0;
+			}
 
 			PlatformView.MinWidth = 0;
 		}
@@ -122,7 +137,10 @@ namespace Microsoft.Maui.Handlers
 		{
 			ComboBox? comboBox = sender as ComboBox;
 			if (comboBox == null)
+			{
 				return;
+			}
+
 			comboBox.MinWidth = comboBox.ActualWidth;
 		}
 	}

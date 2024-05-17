@@ -17,7 +17,10 @@ namespace Microsoft.Maui.Controls
 			Disappearing += (sender, e) =>
 			{
 				if (ImageSource == null)
+				{
 					return;
+				}
+
 				ImageSource.Cancel();
 			};
 		}
@@ -33,7 +36,12 @@ namespace Microsoft.Maui.Controls
 		protected override void OnBindingContextChanged()
 		{
 			if (ImageSource != null)
+			{
 				SetInheritedBindingContext(ImageSource, BindingContext);
+			}
+
+			base.OnBindingContextChanged();
+			}
 
 			base.OnBindingContextChanged();
 		}
@@ -55,7 +63,10 @@ namespace Microsoft.Maui.Controls
 		void OnSourcePropertyChanging(ImageSource oldvalue, ImageSource newvalue)
 		{
 			if (oldvalue != null)
+			{
 				oldvalue.SourceChanged -= OnSourceChanged;
+			}
+			}
 		}
 	}
 }

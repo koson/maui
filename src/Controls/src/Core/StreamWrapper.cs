@@ -21,9 +21,12 @@ namespace Microsoft.Maui.Controls
 		public StreamWrapper(Stream wrapped, IDisposable additionalDisposable)
 		{
 			if (wrapped == null)
+			{
 				throw new ArgumentNullException("wrapped");
+			}
 
 			_wrapped = wrapped;
+			_additionalDisposable = additionalDisposable;
 			_additionalDisposable = additionalDisposable;
 		}
 

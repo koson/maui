@@ -129,9 +129,12 @@ namespace Microsoft.Maui.Controls
 			ICommand cmd = SearchCommand;
 
 			if (cmd != null && !cmd.CanExecute(SearchCommandParameter))
+			{
 				return;
+			}
 
 			cmd?.Execute(SearchCommandParameter);
+			SearchButtonPressed?.Invoke(this, EventArgs.Empty);
 			SearchButtonPressed?.Invoke(this, EventArgs.Empty);
 		}
 

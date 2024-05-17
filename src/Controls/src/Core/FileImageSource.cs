@@ -45,7 +45,13 @@ namespace Microsoft.Maui.Controls
 		protected override void OnPropertyChanged(string propertyName = null)
 		{
 			if (propertyName == FileProperty.PropertyName)
+			{
 				OnSourceChanged();
+			}
+
+			base.OnPropertyChanged(propertyName);
+			}
+
 			base.OnPropertyChanged(propertyName);
 		}
 	}

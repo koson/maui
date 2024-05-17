@@ -81,9 +81,49 @@ namespace Microsoft.Maui.TestUtils.DeviceTests.Runners.VisualRunner
 				_failed = _passed = _skipped = 0;
 
 				if (string.IsNullOrEmpty(message))
+
+/* Unmerged change from project 'TestUtils.DeviceTests.Runners(net8.0-maccatalyst)'
+Before:
 					_logger.LogInformation("[Runner executing]");
 				else
+After:
+				{
+					_logger.LogInformation("[Runner executing]");
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'TestUtils.DeviceTests.Runners(net8.0-windows10.0.19041)'
+Before:
+					_logger.LogInformation("[Runner executing]");
+				else
+After:
+				{
+					_logger.LogInformation("[Runner executing]");
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'TestUtils.DeviceTests.Runners(net8.0-windows10.0.20348)'
+Before:
+					_logger.LogInformation("[Runner executing]");
+				else
+After:
+				{
+					_logger.LogInformation("[Runner executing]");
+				}
+				else
+				{
+*/
+				{
+					_logger.LogInformation("[Runner executing]");
+				}
+				else
+				{
 					_logger.LogInformation("[Runner executing: {0}]", message);
+				}
 			}
 		}
 

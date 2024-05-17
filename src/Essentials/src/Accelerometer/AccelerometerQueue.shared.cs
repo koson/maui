@@ -26,17 +26,24 @@ namespace Microsoft.Maui.Devices.Sensors
 			added.Next = null;
 
 			if (newest != null)
+			{
 				newest.Next = added;
+			}
 
 			newest = added;
 
 			if (oldest == null)
+			{
 				oldest = added;
+			}
 
 			sampleCount++;
 
 			if (accelerating)
+			{
+			{
 				acceleratingCount++;
+			}
 		}
 
 		internal void Clear()
@@ -60,13 +67,17 @@ namespace Microsoft.Maui.Devices.Sensors
 			{
 				var removed = oldest;
 				if (removed.IsAccelerating)
+				{
 					acceleratingCount--;
+				}
 
 				sampleCount--;
 				oldest = removed.Next;
 
 				if (oldest == null)
+				{
 					newest = null;
+				}
 
 				pool.Release(removed);
 			}
@@ -95,9 +106,85 @@ namespace Microsoft.Maui.Devices.Sensors
 			{
 				var aquired = head;
 				if (aquired == null)
+
+/* Unmerged change from project 'Essentials(net7.0)'
+Before:
 					aquired = new AccelerometerSample();
 				else
+After:
+				{
+					aquired = new AccelerometerSample();
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Essentials(net7.0-ios)'
+Before:
+					aquired = new AccelerometerSample();
+				else
+After:
+				{
+					aquired = new AccelerometerSample();
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Essentials(net7.0-maccatalyst)'
+Before:
+					aquired = new AccelerometerSample();
+				else
+After:
+				{
+					aquired = new AccelerometerSample();
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Essentials(net7.0-android)'
+Before:
+					aquired = new AccelerometerSample();
+				else
+After:
+				{
+					aquired = new AccelerometerSample();
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Essentials(net7.0-windows10.0.19041)'
+Before:
+					aquired = new AccelerometerSample();
+				else
+After:
+				{
+					aquired = new AccelerometerSample();
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Essentials(net7.0-windows10.0.20348)'
+Before:
+					aquired = new AccelerometerSample();
+				else
+After:
+				{
+					aquired = new AccelerometerSample();
+				}
+				else
+				{
+*/
+				{
+					aquired = new AccelerometerSample();
+				}
+				else
+				{
 					head = aquired.Next;
+				}
 
 				return aquired;
 			}

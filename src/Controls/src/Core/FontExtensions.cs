@@ -19,9 +19,37 @@ namespace Microsoft.Maui.Controls
 			if (font.Slant != FontSlant.Default)
 			{
 				if (attributes == FontAttributes.None)
+
+/* Unmerged change from project 'Controls.Core(net8.0)'
+Before:
 					attributes = FontAttributes.Italic;
 				else
+After:
+				{
+					attributes = FontAttributes.Italic;
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Controls.Core(net8.0-maccatalyst)'
+Before:
+					attributes = FontAttributes.Italic;
+				else
+After:
+				{
+					attributes = FontAttributes.Italic;
+				}
+				else
+				{
+*/
+				{
+					attributes = FontAttributes.Italic;
+				}
+				else
+				{
 					attributes = attributes | FontAttributes.Italic;
+				}
 			}
 			return attributes;
 		}
@@ -30,7 +58,9 @@ namespace Microsoft.Maui.Controls
 		{
 			var size = element.FontSize;
 			if (defaultSize.HasValue && (size <= 0 || double.IsNaN(size)))
+			{
 				size = defaultSize.Value;
+			}
 
 			return Font.OfSize(element.FontFamily, size, enableScaling: element.FontAutoScalingEnabled).WithAttributes(element.FontAttributes);
 		}

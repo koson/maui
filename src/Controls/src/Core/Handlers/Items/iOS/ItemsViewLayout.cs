@@ -180,7 +180,9 @@ namespace Microsoft.Maui.Controls.Handlers.Items
 		{
 			// This is currently causing an infinite layout loop on iOS 15 https://github.com/dotnet/maui/issues/6566
 			if (preferredAttributes.RepresentedElementKind == "UICollectionElementKindSectionHeader" && OperatingSystem.IsIOSVersionAtLeast(15))
+			{
 				return base.ShouldInvalidateLayout(preferredAttributes, originalAttributes);
+			}
 
 			if (ItemSizingStrategy == ItemSizingStrategy.MeasureAllItems)
 			{
@@ -553,9 +555,23 @@ namespace Microsoft.Maui.Controls.Handlers.Items
 					var lastIndexPath = NSIndexPath.FromItemSection(itemCount - 1, section);
 
 					if (itemsLayout.Orientation == ItemsLayoutOrientation.Vertical)
+
+/* Unmerged change from project 'Controls.Core(net8.0-maccatalyst)'
+Before:
 						collectionView.ScrollToItem(lastIndexPath, UICollectionViewScrollPosition.Bottom, true);
+After:
+					{
+						collectionView.ScrollToItem(lastIndexPath, UICollectionViewScrollPosition.Bottom, true);
+					}
+*/
+					{
+						collectionView.ScrollToItem(lastIndexPath, UICollectionViewScrollPosition.Bottom, true);
+					}
 					else
+					{
+					{
 						collectionView.ScrollToItem(lastIndexPath, UICollectionViewScrollPosition.Right, true);
+					}
 
 					return;
 				}

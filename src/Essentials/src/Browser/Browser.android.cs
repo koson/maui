@@ -33,6 +33,9 @@ namespace Microsoft.Maui.ApplicationModel
 			tabsBuilder.SetShowTitle(true);
 #pragma warning disable CS0618 // Type or member is obsolete
 			if (options.PreferredToolbarColor != null)
+
+/* Unmerged change from project 'Essentials(net7.0-android)'
+Before:
 				tabsBuilder.SetToolbarColor(options.PreferredToolbarColor.ToInt());
 #pragma warning restore CS0618 // Type or member is obsolete
 			if (options.TitleMode != BrowserTitleMode.Default)
@@ -88,6 +91,150 @@ namespace Microsoft.Maui.ApplicationModel
 
 			if (!PlatformUtils.IsIntentSupported(intent))
 				throw new FeatureNotSupportedException();
+After:
+			{
+				tabsBuilder.SetToolbarColor(options.PreferredToolbarColor.ToInt());
+			}
+#pragma warning restore CS0618 // Type or member is obsolete
+			if (options.TitleMode != null)
+			{
+				tabsBuilder.LaunchUrl(context, nativeUri);
+			}
+
+			var tabsIntent = tabsBuilder.Build();
+			ActivityFlags? tabsFlags = null;
+
+			Context? context = ActivityStateManager.Default.GetCurrentActivity(false);
+
+			if (context == null)
+			{
+				context = Application.Context;
+
+				// If using ApplicationContext we need to set ClearTop/NewTask (See #225)
+				tabsFlags = ActivityFlags.ClearTop | ActivityFlags.NewTask;
+			}
+
+#if __ANDROID_24__
+			if (OperatingSystem.IsAndroidVersionAtLeast(24))
+			{
+				if (options.HasFlag(BrowserLaunchFlags.LaunchAdjacent))
+				{
+					if (tabsFlags.HasValue)
+					{
+						tabsFlags |= ActivityFlags.LaunchAdjacent | ActivityFlags.NewTask;
+					}
+					else
+					{
+						tabsFlags = ActivityFlags.LaunchAdjacent | ActivityFlags.NewTask;
+					}
+				}
+			}
+#endif
+
+			// Check if there's flags specified to use
+			if (tabsFlags.HasValue)
+			{
+				tabsIntent.Intent.SetFlags(tabsFlags.Value);
+			}
+
+			if (nativeUri != null)
+			{
+				tabsIntent.LaunchUrl(context, nativeUri);
+			}
+		}
+
+		static void LaunchExternalBrowser(BrowserLaunchOptions options, AndroidUri? nativeUri)
+		{
+			var intent = new Intent(Intent.ActionView, nativeUri);
+			var flags = ActivityFlags.ClearTop | ActivityFlags.NewTask;
+
+#if __ANDROID_24__
+			if (OperatingSystem.IsAndroidVersionAtLeast(24))
+			{
+				if (options.HasFlag(BrowserLaunchFlags.LaunchAdjacent))
+				{
+					flags |= ActivityFlags.LaunchAdjacent;
+				}
+			}
+#endif
+			intent.SetFlags(flags);
+
+			if (!PlatformUtils.IsIntentSupported(intent))
+			{
+				throw new FeatureNotSupportedException();
+			}
+*/
+			{
+				tabsBuilder.SetToolbarColor(options.PreferredToolbarColor.ToInt());
+			}
+#pragma warning restore CS0618 // Type or member is obsolete
+			if (options.TitleMode != BrowserTitleMode.Default)
+			{
+				tabsBuilder.SetShowTitle(options.TitleMode == BrowserTitleMode.Show);
+			}
+
+			var tabsIntent = tabsBuilder.Build();
+			ActivityFlags? tabsFlags = null;
+
+			Context? context = ActivityStateManager.Default.GetCurrentActivity(false);
+
+			if (context == null)
+			{
+				context = Application.Context;
+
+				// If using ApplicationContext we need to set ClearTop/NewTask (See #225)
+				tabsFlags = ActivityFlags.ClearTop | ActivityFlags.NewTask;
+			}
+
+#if __ANDROID_24__
+			if (OperatingSystem.IsAndroidVersionAtLeast(24))
+			{
+				if (options.HasFlag(BrowserLaunchFlags.LaunchAdjacent))
+				{
+					if (tabsFlags.HasValue)
+					{
+						tabsFlags |= ActivityFlags.LaunchAdjacent | ActivityFlags.NewTask;
+					}
+					else
+					{
+						tabsFlags = ActivityFlags.LaunchAdjacent | ActivityFlags.NewTask;
+					}
+				}
+			}
+#endif
+
+			// Check if there's flags specified to use
+			if (tabsFlags.HasValue)
+			{
+				tabsIntent.Intent.SetFlags(tabsFlags.Value);
+			}
+
+			if (nativeUri != BrowserTitleMode.Default)
+			{
+				tabsIntent.SetShowTitle(options.TitleMode == BrowserTitleMode.Show);
+			}
+		}
+
+		static void LaunchExternalBrowser(BrowserLaunchOptions options, AndroidUri? nativeUri)
+		{
+			var intent = new Intent(Intent.ActionView, nativeUri);
+			var flags = ActivityFlags.ClearTop | ActivityFlags.NewTask;
+
+#if __ANDROID_24__
+			if (OperatingSystem.IsAndroidVersionAtLeast(24))
+			{
+				if (options.HasFlag(BrowserLaunchFlags.LaunchAdjacent))
+				{
+					flags |= ActivityFlags.LaunchAdjacent;
+				}
+			}
+#endif
+			intent.SetFlags(flags);
+
+			if (!PlatformUtils.IsIntentSupported(intent))
+			{
+				throw new FeatureNotSupportedException();
+			}
 
 			Application.Context.StartActivity(intent);
 		}

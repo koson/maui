@@ -671,7 +671,9 @@ namespace Microsoft.Maui.Graphics.Platform
 		protected override void PlatformDrawPath(PathF path)
 		{
 			if (path == null)
+			{
 				return;
+			}
 
 			var geometry = GetPath(path);
 
@@ -811,10 +813,62 @@ namespace Microsoft.Maui.Graphics.Platform
 				}
 
 				if (_shadowEffect == null)
+				{
+					_shadowEffect = new ShadowEffect();
+				}
+
+
+/* Unmerged change from project 'Graphics(net7.0-windows10.0.19041)'
+Before:
+				if (_shadowEffect == null)
 					_shadowEffect = new ShadowEffect();
 
 				_shadowEffect.Source = context;
 				_shadowEffect.BlurAmount = CurrentState.ActualShadowBlur / 3;
+				_shadowEffect.ShadowColor = CurrentState.ShadowColor;
+
+				_session.Transform = Matrix3x2.Identity;
+				_session.DrawImage(_shadowEffect, 0, 0);
+After:
+				_shadowEffect.Source = context;
+				_shadowEffect.BlurAmount = CurrentState.ActualShadowBlur / 3;
+				_shadowEffect.ShadowColor = CurrentState.ShadowColor;
+
+				_session.Transform = Matrix3x2.Identity;
+				_session.DrawImage(_shadowEffect, 0, 0);
+*/
+
+/* Unmerged change from project 'Graphics.Win2D(net8.0-windows10.0.20348)'
+Before:
+				if (_shadowEffect == null)
+					_shadowEffect = new ShadowEffect();
+
+				_shadowEffect.Source = context;
+				_shadowEffect.BlurAmount = CurrentState.ActualShadowBlur / 3;
+				_shadowEffect.ShadowColor = CurrentState.ShadowColor;
+
+				_session.Transform = Matrix3x2.Identity;
+				_session.DrawImage(_shadowEffect, 0, 0);
+After:
+				_shadowEffect.Source = context;
+				_shadowEffect.BlurAmount = CurrentState.ActualShadowBlur / 3;
+				_shadowEffect.ShadowColor = CurrentState.ShadowColor;
+
+				_session.Transform = Matrix3x2.Identity;
+				_session.DrawImage(_shadowEffect, 0, 0);
+*/
+				if (_shadowEffect == null)
+				{
+					_shadowEffect = new ShadowEffect();
+				}
+
+				_shadowEffect.Source = context;
+				_shadowEffect.BlurAmount = CurrentState.ActualShadowBlur / 3;
+				_shadowEffect.ShadowColor = CurrentState.ShadowColor;
+
+				_session.Transform = Matrix3x2.Identity;
+				_session.DrawImage(_shadowEffect, 0, 0);
+				_session.Transform = CurrentState.Matrix;
 				_shadowEffect.ShadowColor = CurrentState.ShadowColor;
 
 				_session.Transform = Matrix3x2.Identity;
@@ -836,10 +890,17 @@ namespace Microsoft.Maui.Graphics.Platform
 				}
 
 				if (_blurEffect == null)
+				{
 					_blurEffect = new GaussianBlurEffect();
+				}
 
 				_blurEffect.Source = context;
 				_blurEffect.BorderMode = EffectBorderMode.Soft;
+				_blurEffect.Optimization = EffectOptimization.Speed;
+
+				_session.Transform = Matrix3x2.Identity;
+				_session.DrawImage(_blurEffect, 0, 0);
+				_session.Transform = CurrentState.Matrix;
 				_blurEffect.Optimization = EffectOptimization.Speed;
 
 				_session.Transform = Matrix3x2.Identity;

@@ -23,21 +23,35 @@ namespace Microsoft.Maui.Platform
 		public static void UpdateUserAgent(this WebView2 platformWebView, IWebView webView)
 		{
 			if (platformWebView.CoreWebView2 == null)
+			{
 				return;
+			}
 
 			if (webView.UserAgent != null)
+			{
 				platformWebView.CoreWebView2.Settings.UserAgent = webView.UserAgent;
+			}
 			else
+			{
 				webView.UserAgent = platformWebView.CoreWebView2.Settings.UserAgent;
+			}
+			}
 		}
 
 		public static void UpdateGoBack(this WebView2 platformWebView, IWebView webView)
 		{
 			if (platformWebView == null)
+			{
 				return;
+			}
 
 			if (platformWebView.CoreWebView2.CanGoBack)
+			{
 				platformWebView.CoreWebView2.GoBack();
+			}
+
+			platformWebView.UpdateCanGoBackForward(webView);
+			}
 
 			platformWebView.UpdateCanGoBackForward(webView);
 		}
@@ -45,10 +59,17 @@ namespace Microsoft.Maui.Platform
 		public static void UpdateGoForward(this WebView2 platformWebView, IWebView webView)
 		{
 			if (platformWebView == null)
+			{
 				return;
+			}
 
 			if (platformWebView.CoreWebView2.CanGoForward)
+			{
 				platformWebView.CoreWebView2.GoForward();
+			}
+
+			platformWebView.UpdateCanGoBackForward(webView);
+			}
 
 			platformWebView.UpdateCanGoBackForward(webView);
 		}
@@ -67,7 +88,9 @@ namespace Microsoft.Maui.Platform
 		public static void Eval(this WebView2 platformWebView, IWebView webView, string script)
 		{
 			if (platformWebView == null)
+			{
 				return;
+			}
 
 			platformWebView.DispatcherQueue.TryEnqueue(async () =>
 			{

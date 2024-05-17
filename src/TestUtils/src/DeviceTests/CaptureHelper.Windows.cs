@@ -86,9 +86,23 @@ namespace Microsoft.Maui.DeviceTests
 			{
 				using var frame = sender.TryGetNextFrame();
 				if (frame is null)
+
+/* Unmerged change from project 'TestUtils.DeviceTests(net8.0-windows10.0.20348)'
+Before:
 					tcs.SetException(new InvalidOperationException("A null frame was recieved."));
+After:
+				{
+					tcs.SetException(new InvalidOperationException("A null frame was recieved."));
+				}
+*/
+				{
+					tcs.SetException(new InvalidOperationException("A null frame was recieved."));
+				}
 				else
+				{
+				{
 					tcs.SetResult(CanvasBitmap.CreateFromDirect3D11Surface(device, frame.Surface));
+				}
 			}
 		}
 	}

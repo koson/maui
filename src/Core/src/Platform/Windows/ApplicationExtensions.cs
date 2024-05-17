@@ -11,7 +11,9 @@ namespace Microsoft.Maui.Platform
 		public static void CreatePlatformWindow(this UI.Xaml.Application platformApplication, IApplication application, OpenWindowRequest? args)
 		{
 			if (application.Handler?.MauiContext is not IMauiContext applicationContext)
+			{
 				return;
+			}
 
 			var winuiWindow = new MauiWinUIWindow();
 
@@ -26,6 +28,10 @@ namespace Microsoft.Maui.Platform
 			var window = application.CreateWindow(activationState);
 
 			winuiWindow.SetWindowHandler(window, mauiContext);
+			winuiWindow.SetWindow(window);
+
+			applicationContext.Services.InvokeLifecycleEvents<WindowsLifecycle.OnWindowCreated>(del => del(winuiWindow));
+			winuiWindow.Activate();
 			winuiWindow.SetWindow(window);
 
 			applicationContext.Services.InvokeLifecycleEvents<WindowsLifecycle.OnWindowCreated>(del => del(winuiWindow));

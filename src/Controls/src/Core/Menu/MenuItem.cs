@@ -128,7 +128,12 @@ namespace Microsoft.Maui.Controls
 		void IMenuItemController.Activate()
 		{
 			if (IsEnabled)
+			{
 				Command?.Execute(CommandParameter);
+			}
+
+			OnClicked();
+			}
 
 			OnClicked();
 		}
@@ -189,7 +194,12 @@ namespace Microsoft.Maui.Controls
 		void IPropertyPropagationController.PropagatePropertyChanged(string propertyName)
 		{
 			if (propertyName == null || propertyName == IsEnabledProperty.PropertyName)
+			{
 				this.RefreshPropertyValue(IsEnabledProperty, _isEnabledExplicit);
+			}
+
+			PropertyPropagationExtensions.PropagatePropertyChanged(propertyName, this, ((IVisualTreeElement)this).GetVisualChildren());
+			}
 
 			PropertyPropagationExtensions.PropagatePropertyChanged(propertyName, this, ((IVisualTreeElement)this).GetVisualChildren());
 		}

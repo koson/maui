@@ -19,7 +19,9 @@ namespace Microsoft.Maui.Controls.Platform
 				var color = entry.OnThisPlatform().GetCursorColor();
 
 				if (color != null)
+				{
 					textField.TintColor = color.ToPlatform();
+				}
 			}
 		}
 
@@ -76,9 +78,28 @@ namespace Microsoft.Maui.Controls.Platform
 			if (maxLines < 0)
 			{
 				if (label.LineBreakMode == LineBreakMode.TailTruncation)
+
+/* Unmerged change from project 'Controls.Core(net8.0-maccatalyst)'
+Before:
 					maxLines = 1;
 				else
 					maxLines = 0;
+After:
+				{
+					maxLines = 1;
+				}
+				else
+				{
+					maxLines = 0;
+				}
+*/
+				{
+					maxLines = 1;
+				}
+				else
+				{
+					maxLines = 0;
+				}
 			}
 
 			switch (label.LineBreakMode)

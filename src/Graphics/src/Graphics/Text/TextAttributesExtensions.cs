@@ -14,7 +14,10 @@ namespace Microsoft.Maui.Graphics.Text
 			if (attributes != null)
 			{
 				if (attributes.TryGetValue(type, out var value))
+				{
 					return value;
+				}
+				}
 			}
 
 			return defaultValue;
@@ -28,9 +31,86 @@ namespace Microsoft.Maui.Graphics.Text
 			if (attributes != null)
 			{
 				if (value == null)
+
+/* Unmerged change from project 'Graphics(net8.0-macos)'
+Before:
 					attributes.Remove(type);
 				else
+After:
+				{
+					attributes.Remove(type);
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0)'
+Before:
+					attributes.Remove(type);
+				else
+After:
+				{
+					attributes.Remove(type);
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-maccatalyst)'
+Before:
+					attributes.Remove(type);
+				else
+After:
+				{
+					attributes.Remove(type);
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-android)'
+Before:
+					attributes.Remove(type);
+				else
+After:
+				{
+					attributes.Remove(type);
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-windows10.0.19041)'
+Before:
+					attributes.Remove(type);
+				else
+After:
+				{
+					attributes.Remove(type);
+				}
+				else
+				{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-macos)'
+Before:
+					attributes.Remove(type);
+				else
+After:
+				{
+					attributes.Remove(type);
+				}
+				else
+				{
+*/
+				{
+					attributes.Remove(type);
+				}
+				else
+				{
 					attributes[type] = value;
+				}
+				}
 			}
 		}
 
@@ -50,7 +130,10 @@ namespace Microsoft.Maui.Graphics.Text
 			if (value != null)
 			{
 				if (int.TryParse(value, out var intValue))
+				{
 					return intValue;
+				}
+				}
 			}
 
 			return defaultValue;
@@ -63,9 +146,86 @@ namespace Microsoft.Maui.Graphics.Text
 			int defaultValue)
 		{
 			if (value == defaultValue)
+
+/* Unmerged change from project 'Graphics(net8.0-macos)'
+Before:
 				attributes.RemoveAttribute(type);
 			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-maccatalyst)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-android)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-windows10.0.19041)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-macos)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
 				attributes.SetAttribute(type, value.ToString(CultureInfo.InvariantCulture));
+			}
+			}
 		}
 
 		public static float GetFloatAttribute(
@@ -77,7 +237,10 @@ namespace Microsoft.Maui.Graphics.Text
 			if (value != null)
 			{
 				if (float.TryParse(value, out var floatValue))
+				{
 					return floatValue;
+				}
+				}
 			}
 
 			return defaultValue;
@@ -91,10 +254,99 @@ namespace Microsoft.Maui.Graphics.Text
 		{
 #pragma warning disable RECS0018 // Comparison of floating point numbers with equality operator
 			if (value == defaultValue)
+
+/* Unmerged change from project 'Graphics(net8.0-macos)'
+Before:
 #pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
 				attributes.RemoveAttribute(type);
 			else
+After:
+			{
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0)'
+Before:
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-maccatalyst)'
+Before:
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-android)'
+Before:
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-windows10.0.19041)'
+Before:
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-macos)'
+Before:
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+			{
+#pragma warning restore RECS0018 // Comparison of floating point numbers with equality operator
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
 				attributes.SetAttribute(type, value.ToString(CultureInfo.InvariantCulture));
+			}
+			}
 		}
 
 		public static bool GetBoolAttribute(
@@ -106,7 +358,10 @@ namespace Microsoft.Maui.Graphics.Text
 			if (value != null)
 			{
 				if (bool.TryParse(value, out var boolValue))
+				{
 					return boolValue;
+				}
+				}
 			}
 
 			return defaultValue;
@@ -119,9 +374,86 @@ namespace Microsoft.Maui.Graphics.Text
 			bool defaultValue = false)
 		{
 			if (value == defaultValue)
+
+/* Unmerged change from project 'Graphics(net8.0-macos)'
+Before:
 				attributes.RemoveAttribute(type);
 			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-maccatalyst)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-android)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-windows10.0.19041)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-macos)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
 				attributes.SetAttribute(type, value.ToString());
+			}
+			}
 		}
 
 		public static T GetEnumAttribute<T>(
@@ -133,7 +465,10 @@ namespace Microsoft.Maui.Graphics.Text
 			if (value != null)
 			{
 				if (Enum.TryParse(value, out T enumValue))
+				{
 					return enumValue;
+				}
+				}
 			}
 
 			return defaultValue;
@@ -146,9 +481,86 @@ namespace Microsoft.Maui.Graphics.Text
 			T defaultValue) where T : struct
 		{
 			if (Equals(value, defaultValue))
+
+/* Unmerged change from project 'Graphics(net8.0-macos)'
+Before:
 				attributes.RemoveAttribute(type);
 			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-maccatalyst)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-android)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-windows10.0.19041)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+
+/* Unmerged change from project 'Graphics(net7.0-macos)'
+Before:
+				attributes.RemoveAttribute(type);
+			else
+After:
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
+*/
+			{
+				attributes.RemoveAttribute(type);
+			}
+			else
+			{
 				attributes.SetAttribute(type, value.ToString());
+			}
+			}
 		}
 	}
 }
